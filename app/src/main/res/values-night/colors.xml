@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="iconColor">#FFFFFFFF</color>
-    <color name="iconColorText">#FFFFFFFF</color>
+    <color name="iconColor">#FFBDBDBD</color>
+    <color name="iconColorText">#FFE0E0E0</color>
 
-    <color name="colorPrimary">#303F9F</color>
-    <color name="colorPrimaryDark">#283593</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#FF242424</color>
+    <color name="colorPrimaryDark">#FF181818</color>
+    <color name="colorAccent">#FF9E9E9E</color>
 
     <color name="rippleColor">@color/ripple_material_dark</color>
 
-    <color name="searchColorPrimary">#212121</color>
-    <color name="searchColorPrimaryDark">#1A1A1A</color>
+    <color name="searchColorPrimary">#FF212121</color>
+    <color name="searchColorPrimaryDark">#FF1A1A1A</color>
 
-    <color name="userAwayColorPrimary">#E64A19</color>
-    <color name="userAwayColorPrimaryDark">#D84315</color>
+    <color name="userAwayColorPrimary">#FF8A6A5A</color>
+    <color name="userAwayColorPrimaryDark">#FF704F43</color>
 
-    <color name="serverListConnected">#689F38</color>
-    <color name="serverListConnecting">#FFB300</color>
-    <color name="serverListDisconnected">#F4511E</color>
-    <color name="serverListInactive">#0288D1</color>
+    <color name="serverListConnected">#FF789B5A</color>
+    <color name="serverListConnecting">#FFB08A3E</color>
+    <color name="serverListDisconnected">#FFB05A4A</color>
+    <color name="serverListInactive">#FF607D8B</color>
 
-    <color name="messageTimestamp">#9E9E9E</color>
-    <color name="messageStatusText">#BDBDBD</color>
-    <color name="messageTopic">#fff</color>
+    <color name="messageTimestamp">#FF858585</color>
+    <color name="messageStatusText">#FFA5A5A5</color>
+    <color name="messageTopic">#FFE0E0E0</color>
 
-    <color name="ircGray">#757575</color>
-    <color name="ircLightGray">#E0E0E0</color>
+    <color name="ircGray">#FF757575</color>
+    <color name="ircLightGray">#FFC5C5C5</color>
 
-    <color name="memberOwner">#FFC107</color>
-    <color name="memberOp">#8BC34A</color>
-    <color name="memberHalfOp">#009688</color>
-    <color name="memberVoice">#03A9F4</color>
-    <color name="memberNormal">#fff</color>
+    <color name="memberOwner">#FFC09A45</color>
+    <color name="memberOp">#FF7E9D62</color>
+    <color name="memberHalfOp">#FF5F8D82</color>
+    <color name="memberVoice">#FF6694A8</color>
+    <color name="memberNormal">#FFE0E0E0</color>
 
-    <color name="formatDefaultColorIndicator">#5CFFFFFF</color>
+    <color name="formatDefaultColorIndicator">#5CE0E0E0</color>
 
 </resources>
