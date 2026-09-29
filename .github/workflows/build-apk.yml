@@ -1,5 +1,6 @@
 name: Build APK
 
+# Step 1 build trigger
 on:
   push:
     branches: [ master ]
