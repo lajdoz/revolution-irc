@@ -107,7 +107,7 @@
     <string name="action_sort_name">Trier par nom</string>
     <string name="action_join_channel">Rejoindre le canal</string>
     <string name="action_message_user">Envoyer un message à l’utilisateur</string>
-    <string name="action_part_channel">Quitterter le canal</string>
+    <string name="action_part_channel">Quitter le canal</string>
     <string name="action_close_direct">Fermer la conversation</string>
     <string name="action_clear_all">Tout effacer</string>
     <string name="action_reset">Réinitialiser</string>
