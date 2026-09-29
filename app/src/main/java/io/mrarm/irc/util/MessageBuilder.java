@@ -316,11 +316,14 @@ public class MessageBuilder {
 
         String nick = sender.getNick();
         int color = IRCColorUtils.getNickColor(mContext, nick);
-        SpannableString spannable = new SpannableString(nick +
-                (sender.getUser() != null ? "!" + sender.getUser() : 0) +
-                (sender.getHost() != null ? "@" + sender.getHost() : 0));
+        String hostname = (sender.getUser() != null ? "!" + sender.getUser() : "") +
+                (sender.getHost() != null ? "@" + sender.getHost() : "");
+        SpannableString spannable = new SpannableString(nick + hostname);
         spannable.setSpan(new ForegroundColorSpan(color), 0, nick.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (hostname.length() > 0)
+            spannable.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.messageTimestamp)),
+                    nick.length(), spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannable;
     }
 
@@ -354,7 +357,7 @@ public class MessageBuilder {
                         buildEventMessage("→", R.color.serverListConnected, message.getSender()));
             case PART:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        buildEventMessage("↗", R.color.serverListConnecting, message.getSender()));
+                        buildEventMessage("←", R.color.serverListConnecting, message.getSender()));
             case KICK: {
                 String kickedNick = ((KickMessageInfo) message).getKickedNick();
                 return processFormat(mEventMessageFormat, message.getDate(), null,
@@ -365,7 +368,7 @@ public class MessageBuilder {
             }
             case QUIT:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        buildEventMessage("↘", R.color.serverListDisconnected, message.getSender()));
+                        buildEventMessage("←", R.color.serverListDisconnected, message.getSender()));
             case NICK_CHANGE: {
                 String newNick = ((NickChangeMessageInfo) message).getNewNick();
                 SpannableStringBuilder ssb = (SpannableStringBuilder)
