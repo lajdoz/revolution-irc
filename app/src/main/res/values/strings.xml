@@ -25,8 +25,8 @@
     <string name="message_whois">Informations utilisateur de %s</string>
 
     <string name="message_mode">%s %s</string>
-    <string name="message_mode_set">set %s</string>
-    <string name="message_mode_unset">unset %s</string>
+    <string name="message_mode_set">set mode %s</string>
+    <string name="message_mode_unset">unset mode %s</string>
     <string name="message_mode_gave">gave %s</string>
     <string name="message_mode_removed">removed %s</string>
 
