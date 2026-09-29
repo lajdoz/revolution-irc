@@ -373,19 +373,15 @@ public class MessageFormatSettingsActivity extends ThemedActivity {
 
     public static SpannableString buildEventPresetMessageFormat(Context context, int preset) {
         if (preset == 0 || preset == 1) {
-            SpannableString spannable = new SpannableString("\0 |* \0");
+            SpannableString spannable = new SpannableString("\0 \0");
             spannable.setSpan(new MessageBuilder.MetaForegroundColorSpan(context, MessageBuilder.MetaForegroundColorSpan.COLOR_TIMESTAMP), 0, 1, MessageBuilder.FORMAT_SPAN_FLAGS);
-            if (preset == 0)
-                spannable.setSpan(new StyleSpan(Typeface.ITALIC), 3, 6, MessageBuilder.FORMAT_SPAN_FLAGS);
-            spannable.setSpan(new MessageBuilder.MetaForegroundColorSpan(context, MessageBuilder.MetaForegroundColorSpan.COLOR_STATUS), 3, 6, MessageBuilder.FORMAT_SPAN_FLAGS);
             spannable.setSpan(new MessageBuilder.MetaChipSpan(context, MessageBuilder.MetaChipSpan.TYPE_TIME), 0, 1, MessageBuilder.FORMAT_SPAN_FLAGS);
-            spannable.setSpan(new MessageBuilder.MetaChipSpan(context, MessageBuilder.MetaChipSpan.TYPE_MESSAGE),  5, 6, MessageBuilder.FORMAT_SPAN_FLAGS);
-            spannable.setSpan(new MessageBuilder.MetaChipSpan(context, MessageBuilder.MetaChipSpan.TYPE_WRAP_ANCHOR), 2, 3, MessageBuilder.FORMAT_SPAN_FLAGS);
+            spannable.setSpan(new MessageBuilder.MetaChipSpan(context, MessageBuilder.MetaChipSpan.TYPE_MESSAGE), 2, 3, MessageBuilder.FORMAT_SPAN_FLAGS);
+            spannable.setSpan(new MessageBuilder.MetaChipSpan(context, MessageBuilder.MetaChipSpan.TYPE_WRAP_ANCHOR), 1, 2, MessageBuilder.FORMAT_SPAN_FLAGS);
             return spannable;
         }
         return null;
     }
-
     private void insertChip(int type) {
         EditText editText = mTextFormatBar.getEditText();
         int sStart = editText.getSelectionStart();
