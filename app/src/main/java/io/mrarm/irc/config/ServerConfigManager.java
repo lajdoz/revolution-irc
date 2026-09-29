@@ -64,6 +64,33 @@ public class ServerConfigManager {
         }
 
         loadServers();
+        addDefaultServersIfEmpty();
+    }
+
+    private void addDefaultServersIfEmpty() {
+        if (!mServers.isEmpty())
+            return;
+
+        addDefaultServer("EpiKnet", "irc.epiknet.org", 6697, true);
+        addDefaultServer("EuropNet", "irc.europnet.org", 6697, true);
+        addDefaultServer("Chaat", "irc.chaat.fr", 6697, true);
+        addDefaultServer("Libera.Chat", "irc.libera.chat", 6697, true);
+        addDefaultServer("Undernet", "irc.undernet.org", 6667, false);
+    }
+
+    private void addDefaultServer(String name, String address, int port, boolean ssl) {
+        ServerConfigData data = new ServerConfigData();
+        data.name = name;
+        data.uuid = UUID.randomUUID();
+        data.address = address;
+        data.port = port;
+        data.ssl = ssl;
+        try {
+            saveServer(data);
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to save default server info");
+            e.printStackTrace();
+        }
     }
 
     // NOTE: This is not synchronized; don't call it outside of the constructor
