@@ -472,101 +472,33 @@ public class MessageBuilder {
 
     private CharSequence buildModeMessage(String senderNick,
                                           List<ChannelModeMessageInfo.Entry> list) {
-        Map<String, Set<Character>> addNickModes = new HashMap<>();
-        Map<String, Set<Character>> removeNickModes = new HashMap<>();
-        Set<Character> flagModes = new HashSet<>();
-        Set<Character> unsetModes = new HashSet<>();
-        Map<Character, Set<String>> valueModes = new HashMap<>();
-        Map<Character, Set<String>> removeValueModes = new HashMap<>();
-
-        for (ChannelModeMessageInfo.Entry entry : list) {
-            if (entry.getType() == ChannelModeMessageInfo.EntryType.NICK_FLAG) {
-                Set<Character> setAdd = addNickModes.get(entry.getParam());
-                Set<Character> setRem = removeNickModes.get(entry.getParam());
-                if (entry.isRemoved()) {
-                    if (setRem == null) {
-                        setRem = new HashSet<>();
-                        removeNickModes.put(entry.getParam(), setRem);
-                    }
-                    setRem.add(entry.getMode());
-                    if (setAdd != null)
-                        setAdd.remove(entry.getMode());
-                } else {
-                    if (setAdd == null) {
-                        setAdd = new HashSet<>();
-                        addNickModes.put(entry.getParam(), setAdd);
-                    }
-                    setAdd.add(entry.getMode());
-                    if (setRem != null)
-                        setRem.remove(entry.getMode());
-                }
-            } else if (entry.getType() == ChannelModeMessageInfo.EntryType.FLAG) {
-                if (entry.isRemoved()) {
-                    unsetModes.add(entry.getMode());
-                    flagModes.remove(entry.getMode());
-                } else {
-                    flagModes.add(entry.getMode());
-                    unsetModes.remove(entry.getMode());
-                }
-            } else {
-                if (entry.isRemoved()) {
-                    if (entry.getType() == ChannelModeMessageInfo.EntryType.VALUE_EXACT_UNSET ||
-                            entry.getType() == ChannelModeMessageInfo.EntryType.LIST) {
-                        if (!removeValueModes.containsKey(entry.getMode()))
-                            removeValueModes.put(entry.getMode(), new HashSet<>());
-                        removeValueModes.get(entry.getMode()).add(entry.getParam());
-                        if (valueModes.containsKey(entry.getMode()))
-                            valueModes.get(entry.getMode()).remove(entry.getParam());
-                    } else {
-                        unsetModes.add(entry.getMode());
-                        valueModes.remove(entry.getMode());
-                    }
-                } else {
-                    if (!valueModes.containsKey(entry.getMode()))
-                        valueModes.put(entry.getMode(), new HashSet<>());
-                    valueModes.get(entry.getMode()).add(entry.getParam());
-                    unsetModes.remove(entry.getMode());
-                    removeValueModes.remove(entry.getMode());
-                }
-            }
-        }
-
         SpannableStringBuilder msg = new SpannableStringBuilder();
-        if (flagModes.size() > 0 || valueModes.size() > 0) {
-            SpannableStringBuilder setBuilder = new SpannableStringBuilder();
-            if (flagModes.size() > 0)
-                setBuilder.append(SpannableStringHelper.format(mContext.getResources().getQuantityString(R.plurals.message_mode_channel, flagModes.size()), setToString(flagModes)));
-            buildValueModeList(setBuilder, valueModes);
-            if (setBuilder.length() > 0)
-                appendDelim(msg, SpannableStringHelper.getText(mContext, R.string.message_mode_set, setBuilder));
-        }
-        if (unsetModes.size() > 0 || removeValueModes.size() > 0) {
-            SpannableStringBuilder setBuilder = new SpannableStringBuilder();
-            if (unsetModes.size() > 0)
-                setBuilder.append(SpannableStringHelper.format(mContext.getResources().getQuantityString(R.plurals.message_mode_channel, unsetModes.size()), setToString(unsetModes)));
-            buildValueModeList(setBuilder, removeValueModes);
-            if (setBuilder.length() > 0)
-                appendDelim(msg, SpannableStringHelper.getText(mContext, R.string.message_mode_unset, setBuilder));
-        }
-        if (addNickModes.size() > 0) {
-            SpannableStringBuilder setBuilder = new SpannableStringBuilder();
-            for (Map.Entry<String, Set<Character>> entry : addNickModes.entrySet()) {
-                if (entry.getValue().size() > 0)
-                    appendDelim(setBuilder, SpannableStringHelper.getText(mContext, R.string.message_mode_gave_to, buildNickModeList(entry.getValue()), buildColoredNick(entry.getKey())));
+        for (ChannelModeMessageInfo.Entry entry : list) {
+            if (msg.length() > 0)
+                msg.append(mContext.getString(R.string.text_comma));
+
+            String sign = entry.isRemoved() ? "-" : "+";
+            SpannableString mode = new SpannableString(sign + entry.getMode());
+            mode.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.messageDisconnected)),
+                    0, mode.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mode.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
+                    0, mode.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            msg.append(mode);
+
+            String param = entry.getParam();
+            if (param != null && param.length() > 0) {
+                msg.append(" ");
+                msg.append(buildColoredMessage(param,
+                        mContext.getResources().getColor(R.color.messageStatusText), false));
             }
-            if (setBuilder.length() > 0)
-                appendDelim(msg, SpannableStringHelper.getText(mContext, R.string.message_mode_gave, setBuilder));
         }
-        if (removeNickModes.size() > 0) {
-            SpannableStringBuilder setBuilder = new SpannableStringBuilder();
-            for (Map.Entry<String, Set<Character>> entry : removeNickModes.entrySet()) {
-                if (entry.getValue().size() > 0)
-                    appendDelim(setBuilder, SpannableStringHelper.getText(mContext, R.string.message_mode_removed_from, buildNickModeList(entry.getValue()), buildColoredNick(entry.getKey())));
-            }
-            if (setBuilder.length() > 0)
-                appendDelim(msg, SpannableStringHelper.getText(mContext, R.string.message_mode_removed, setBuilder));
-        }
-        return SpannableStringHelper.getText(mContext, R.string.message_mode, buildColoredNick(senderNick), msg);
+
+        SpannableStringBuilder result = new SpannableStringBuilder();
+        result.append(buildColoredMessage(senderNick == null ? "" : senderNick,
+                mContext.getResources().getColor(R.color.messageStatusText), false));
+        result.append(" ");
+        result.append(SpannableStringHelper.getText(mContext, R.string.message_mode_set, msg));
+        return result;
     }
 
     private String setToString(Set<Character> s) {
