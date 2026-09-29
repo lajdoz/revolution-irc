@@ -5,12 +5,7 @@
     <item
         android:id="@+id/action_join_channel"
         android:title="@string/action_join_channel"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_message_user"
-        android:title="@string/action_message_user"
-        app:showAsAction="never|collapseActionView" />
-    <item
+        app:showAsAction="never" /><item
         android:id="@+id/action_part_channel"
         android:title="@string/action_part_channel"
         app:showAsAction="never" />
