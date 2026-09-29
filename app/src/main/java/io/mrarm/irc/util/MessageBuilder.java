@@ -12,6 +12,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -323,6 +324,19 @@ public class MessageBuilder {
         return spannable;
     }
 
+    private CharSequence buildEventMessage(String arrow, int color, MessageSenderInfo sender) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        SpannableString arrowText = new SpannableString(arrow);
+        arrowText.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(color)), 0, arrow.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        arrowText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, arrow.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.append(arrowText);
+        builder.append(" ");
+        builder.append(buildColoredNickWithHostname(sender));
+        return builder;
+    }
+
     public CharSequence buildMessage(MessageInfo message) {
         String senderNick = message.getSender() == null ? null : message.getSender().getNick();
         switch (message.getType()) {
@@ -337,13 +351,10 @@ public class MessageBuilder {
                         LinkHelper.addLinks(IRCColorUtils.getFormattedString(mContext, message.getMessage())));
             case JOIN:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        SpannableStringHelper.getText(mContext, R.string.message_join,
-                                buildColoredNickWithHostname(message.getSender())));
+                        buildEventMessage("→", R.color.serverListConnected, message.getSender()));
             case PART:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        SpannableStringHelper.getText(mContext,
-                                message.getMessage() == null ? R.string.message_part_no_message : R.string.message_part,
-                                buildColoredNickWithHostname(message.getSender()), message.getMessage()));
+                        buildEventMessage("↗", R.color.serverListConnecting, message.getSender()));
             case KICK: {
                 String kickedNick = ((KickMessageInfo) message).getKickedNick();
                 return processFormat(mEventMessageFormat, message.getDate(), null,
@@ -354,8 +365,7 @@ public class MessageBuilder {
             }
             case QUIT:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        SpannableStringHelper.getText(mContext, R.string.message_quit,
-                                buildColoredNickWithHostname(message.getSender()), message.getMessage()));
+                        buildEventMessage("↘", R.color.serverListDisconnected, message.getSender()));
             case NICK_CHANGE: {
                 String newNick = ((NickChangeMessageInfo) message).getNewNick();
                 SpannableStringBuilder ssb = (SpannableStringBuilder)
