@@ -354,10 +354,10 @@ public class MessageBuilder {
                         LinkHelper.addLinks(IRCColorUtils.getFormattedString(mContext, message.getMessage())));
             case JOIN:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        buildEventMessage("→", R.color.serverListConnected, message.getSender()));
+                        buildEventMessage("⟶", R.color.serverListConnected, message.getSender()));
             case PART:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        buildEventMessage("←", R.color.serverListConnecting, message.getSender()));
+                        buildEventMessage("⟵", R.color.serverListConnecting, message.getSender()));
             case KICK: {
                 String kickedNick = ((KickMessageInfo) message).getKickedNick();
                 return processFormat(mEventMessageFormat, message.getDate(), null,
@@ -368,7 +368,7 @@ public class MessageBuilder {
             }
             case QUIT:
                 return processFormat(mEventMessageFormat, message.getDate(), null,
-                        buildEventMessage("←", R.color.serverListDisconnected, message.getSender()));
+                        buildEventMessage("⟵", R.color.serverListDisconnected, message.getSender()));
             case NICK_CHANGE: {
                 String newNick = ((NickChangeMessageInfo) message).getNewNick();
                 SpannableStringBuilder ssb = (SpannableStringBuilder)
