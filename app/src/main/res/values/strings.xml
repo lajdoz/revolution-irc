@@ -105,7 +105,7 @@
     <string name="action_sort">Trier</string>
     <string name="action_sort_none">Ne pas trier</string>
     <string name="action_sort_name">Trier par nom</string>
-    <string name="action_join_channel">Rejoindre le canal</string>
+    <string name="action_join_channel">Join salon</string>
     <string name="action_message_user">Envoyer un message à l’utilisateur</string>
     <string name="action_part_channel">Quitter le canal</string>
     <string name="action_close_direct">Fermer la conversation</string>
