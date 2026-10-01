@@ -7,7 +7,7 @@
     android:paddingStart="8dp"
     android:paddingRight="8dp"
     android:paddingEnd="8dp"
-    android:paddingTop="1dp"
-    android:paddingBottom="1dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     android:background="?attr/selectableItemBackground" />
