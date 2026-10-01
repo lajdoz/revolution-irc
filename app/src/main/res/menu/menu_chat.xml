@@ -5,9 +5,6 @@
     <item
         android:id="@+id/action_join_channel"
         android:title="@string/action_join_channel"
-        app:showAsAction="never" /><item
-        android:id="@+id/action_part_channel"
-        android:title="@string/action_part_channel"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_dcc_send"
@@ -40,5 +37,9 @@
         android:id="@+id/action_format"
         android:title="@string/message_format"
         android:visible="false"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_part_channel"
+        android:title="@string/action_part_channel"
         app:showAsAction="never" />
 </menu>
