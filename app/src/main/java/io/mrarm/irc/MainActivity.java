@@ -482,11 +482,6 @@ public class MainActivity extends ThemedActivity implements IRCApplication.ExitC
             dialog.show();
             dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             setFragmentDialog(dialog);
-        } else if (id == R.id.action_message_user) {
-            UserSearchDialog dialog = new UserSearchDialog(this, ((ChatFragment)
-                    getCurrentFragment()).getConnectionInfo());
-            dialog.show();
-            setFragmentDialog(dialog);
         } else if (id == R.id.action_part_channel) {
             ChatApi api = ((ChatFragment) getCurrentFragment()).getConnectionInfo().getApiInstance();
             String channel = ((ChatFragment) getCurrentFragment()).getCurrentChannel();
